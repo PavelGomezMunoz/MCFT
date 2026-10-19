@@ -1,20 +1,23 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace MCFT.Core.Calculators
 {
-    public static class StiffnessCalculator
+    public class StiffnessCalculator
     {
-        public static Matrix<double> ConcreteStiffnessMatrixLocal(double fc1, double fc2, double epsilon1, double epsilon2, double epsilonCr, double Ec)
+        public static Matrix<double> ConcreteStiffnessMatrixLocal(double fc1, double fc2, double epsilon1, double epsilon2, double Ec)
         {
             double Ec1;
             double Ec2;
             double Gc;
 
-            if (Math.Abs(epsilon2) < 0.001) {Ec2 = Ec;}
-            else {Ec2 = fc2 / epsilon2;}
+            if (Math.Abs(fc2) < 0.001) { Ec2 = Ec; }
+            else { Ec2 = fc2 / epsilon2; }
 
-            if (epsilon1<epsilonCr) { Ec1 = Ec; }
+            if (fc1 < 0.001) { Ec1 = Ec; }
             else { Ec1 = fc1 / epsilon1; }
 
             Gc = (Ec1 * Ec2) / (Ec1 + Ec2);

@@ -15,8 +15,8 @@ namespace MCFT.Core.Solvers
             var result = new MCFTResult();
             double error = double.MaxValue;
             int iteration = 0;
-            double thetaDegrees;
-            double psiDegrees;
+            double thetaDegrees = 0;
+            double psiDegrees = 0;
             Vector<double> strainVectorGlobal = Vector<double>.Build.DenseOfArray(new double[] { 0.0, 0.0, 0.00001 });
             Vector<double> stressVectorGlobal = Vector<double>.Build.DenseOfArray(new double[] { input.Fx, input.Fy, input.Vxy });
             Vector<double> concPrincipalStrainVector = Vector<double>.Build.Dense(3);
@@ -29,13 +29,13 @@ namespace MCFT.Core.Solvers
             Matrix<double> combStiffnessMatrixGlobal = Matrix<double>.Build.Dense(3, 3);
 
 
-            while (error > input.Tolerance && iteration < input.MaxIterations)
+            while (error > input.Tolerance)
             {
                 iteration++;
                 //Note theta is the mirrored angle to the compression strut angle
                 thetaDegrees = StrainCalculator.PrincipalStrainAngleDegrees(strainVectorGlobal);
                 psiDegrees = 180 - thetaDegrees;
-                concStiffnessMatrixLocal = StiffnessCalculator.ConcreteStiffnessMatrixLocal(concPrincipalStressVector[0], concPrincipalStressVector[1], concPrincipalStrainVector[0], concPrincipalStrainVector[1], input.EpsilonCr, input.Ec);
+                concStiffnessMatrixLocal = StiffnessCalculator.ConcreteStiffnessMatrixLocal(concPrincipalStressVector[0], concPrincipalStressVector[1], concPrincipalStrainVector[0], concPrincipalStrainVector[1], input.Ec);
                 steelStiffnessMatrixGlobal = StiffnessCalculator.SteelStiffnessMatrixGlobal(input.Es, input.RhoX, input.RhoY, strainVectorGlobal[0], strainVectorGlobal[1], input.Fyx, input.Fyy);
                 concStiffnessMatrixGlobal = MatrixUtilities.Rotate(concStiffnessMatrixLocal, psiDegrees);
 
@@ -61,6 +61,8 @@ namespace MCFT.Core.Solvers
                     Vxy = newStressVectorGlobal[2],
                     Error = error
                 });
+
+                if (iteration == input.MaxIterations) {break;}
             }
 
             result.Converged = error <= input.Tolerance;
