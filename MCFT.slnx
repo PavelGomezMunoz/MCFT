@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MCFT.Console/MCFT.Console.csproj" Id="c70a2459-bf07-454f-b429-0a48e2622f24" />
+  <Project Path="MCFT.Core/MCFT.Core.csproj" />
+  <Project Path="MCFT.UnitTests/MCFT.UnitTests.csproj" Id="5cb10076-cc77-4e1f-ab6b-7fb8fd04a49e" />
+  <Project Path="MCFT.WPF/MCFT.WPF.csproj" />
+</Solution>
