@@ -28,7 +28,7 @@ namespace MCFT.Core.Models
         public double CrackSpacingY { get; set; }
 
         //Solver Properties
-        public double Tolerance { get; set; } = 0.01;
+        public double Tolerance { get; set; } = 0.001;
         public int MaxIterations { get; set; } = 1000;
     }
 }
