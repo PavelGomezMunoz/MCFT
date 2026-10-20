@@ -23,7 +23,7 @@ namespace MCFT.Core.Calculators
             double ex = strainVector[0];
             double ey = strainVector[1];
             double gammaXY = strainVector[2];
-            double angle = 0.5 * Math.Atan2(gammaXY, ey - ex);
+            double angle = 0.5 * Math.Atan2(gammaXY, ey - ex); // angle range ( -90 deg < theta <=90 deg )
             return angle * (180.0 / Math.PI);
         }
 

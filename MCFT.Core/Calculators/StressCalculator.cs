@@ -40,26 +40,47 @@ namespace MCFT.Core.Calculators
             double epsilon2 = concPrincipalStrainVector[1];
             double fsx = steelPrincipalStressVector[0];
             double fsy = steelPrincipalStressVector[1];
+            double tanAbsThetaLimitMax = Math.Tan(89 * Math.PI / 180); // limit for tan(theta) to avoid singularity in calcs
+            double tanAbsThetaLimitMin = Math.Tan(1 * Math.PI / 180); // limit for tan(theta) to avoid singularity in calcs
 
-            double thetaRadians = Math.Abs(thetaDegrees) * (Math.PI / 180.0); //kept postive to avoid sin and tan flipping signs for crack width and vci calcs 
+            double thetaRadians = thetaDegrees * (Math.PI / 180.0); // possible theta range -90° < theta <= 90°
             double cosTheta = Math.Cos(thetaRadians);
             double sinTheta = Math.Sin(thetaRadians);
             double tanTheta = Math.Tan(thetaRadians);
-            double crackSpacing = 1 / (sinTheta / crackSpacingX + cosTheta / crackSpacingY);
+            double sinAbsTheta = Math.Abs(sinTheta);
+            double tanAbsTheta = Math.Abs(tanTheta);
+            double crackSpacing = 1 / (sinAbsTheta / crackSpacingX + cosTheta / crackSpacingY);
             double crackWidth = crackSpacing * epsilon1;
-            double f1cx = rhoX * (fyx - fsx);
-            double f1cy = rhoY * (fyy - fsy);
+            double f1cx = rhoX * (fyx - fsx); // residual capacity of the x-dir reinf that crosses a crack
+            double f1cy = rhoY * (fyy - fsy); // residual capacity of the y-dir reinf that crosses a crack
             double vciMaxA = (0.18 * Math.Sqrt(fcPrime)) / (0.31 + (24 * crackWidth) / (aggregateSize + 16));
-            double vciMaxB = Math.Abs(f1cx - f1cy) * cosTheta * sinTheta;
+            double vciMaxB = Math.Abs(f1cx - f1cy) * cosTheta * sinAbsTheta;
             double vci = Math.Min(vciMaxA, vciMaxB);
 
-            double f1_a;
+            double f1_a; // tensile capacity of concrete
             if (epsilon1 >= epsilonCr) { f1_a = ft / (1 + Math.Sqrt(500 * epsilon1)); }
             else { f1_a = epsilon1 * concE; }
 
-            double f1_b = f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta;
-            double f1_c = f1cx + vci / tanTheta;
-            double f1_d = f1cy + vci * tanTheta;
+            double f1_b = f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta; // reserve capacity to biaxial yield of reinforcement that crosses a crack
+
+            double f1_c; // limit due to yield of the x-dir reinf in conjuction with vci at maximum
+            double f1_d; // limit due to yield of the y-dir reinf in conjuction with vci at maximum
+            if (tanAbsTheta < tanAbsThetaLimitMin)
+            {
+                f1_c = f1cx + vci / tanAbsThetaLimitMin;
+                f1_d = f1cy;
+            }
+            else if (tanAbsTheta > tanAbsThetaLimitMax)
+            {
+                f1_c = f1cx;
+                f1_d = f1cy + vci * tanAbsThetaLimitMax;
+            }
+            else
+            {
+                f1_c = f1cx + vci / tanAbsTheta;
+                f1_d = f1cy + vci * tanAbsTheta;
+            }
+
             double fc1 = Math.Min(Math.Min(f1_a, f1_b), Math.Min(f1_c, f1_d));
 
             double fc2Max = -fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1);

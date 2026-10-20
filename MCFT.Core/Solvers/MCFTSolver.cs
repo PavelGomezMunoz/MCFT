@@ -35,18 +35,8 @@ namespace MCFT.Core.Solvers
                 Vector<double> steelPrincipalStressVector = StressCalculator.PrincipalSteelStressVector(strainVectorGlobal, input.Es, input.Fyx, input.Fyy);
                 concPrincipalStressVector = StressCalculator.PrincipalConcStressVector(input, concPrincipalStrainVector, steelPrincipalStressVector, thetaDegrees);
                 Vector<double> newStressVectorGlobal = StressCalculator.StressStateGlobal(concPrincipalStressVector, steelPrincipalStressVector, thetaDegrees, input.RhoX, input.RhoY);
+                
                 error = (newStressVectorGlobal - stressVectorGlobal).AbsoluteMaximum();
-
-                //Write record
-                result.History.Add(new IterationResult
-                {
-                    Iteration = iteration,
-                    Fx = newStressVectorGlobal[0],
-                    Fy = newStressVectorGlobal[1],
-                    Vxy = newStressVectorGlobal[2],
-                    Error = error
-                });
-
                 if (iteration == input.MaxIterations) {break;}
             }
             //Write final result
