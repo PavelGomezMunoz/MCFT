@@ -13,7 +13,7 @@ namespace MCFT.Core.Calculators
             if (Math.Abs(fc2) < 0.001) { Ec2 = Ec; }
             else { Ec2 = fc2 / epsilon2; }
 
-            if (fc1 < 0.001) { Ec1 = Ec; }
+            if (Math.Abs(fc1) < 0.001) { Ec1 = Ec; }
             else { Ec1 = fc1 / epsilon1; }
 
             Gc = (Ec1 * Ec2) / (Ec1 + Ec2);
