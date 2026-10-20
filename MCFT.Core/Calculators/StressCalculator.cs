@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MathNet.Numerics.Financial;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
+﻿using MathNet.Numerics.LinearAlgebra;
 using MCFT.Core.Models;
 
 namespace MCFT.Core.Calculators
 {
-    public class StressCalculator
+    public static class StressCalculator
     {
         public static Vector<double> PrincipalSteelStressVector(Vector<double> globalStrainVector, double Es, double fyx, double fyy)
         {
@@ -26,14 +21,27 @@ namespace MCFT.Core.Calculators
             return Vector<double>.Build.DenseOfArray(new double[] { fsx, fsy, 0 });
         }
 
-        public static Vector<double> PrincipalConcStressVector(double concE, double fcPrime, double fcr, double fyx, double fyy, double rhoX, double rhoY, double aggregateSize, double crackSpacingX, double crackSpacingY, double epsilonCr, double epsilonNought, Vector<double> concPrincipalStrainVector, Vector<double> steelPrincipalStressVector, double thetaDegrees)
+        public static Vector<double> PrincipalConcStressVector(MCFTInput input, Vector<double> concPrincipalStrainVector, Vector<double> steelPrincipalStressVector, double thetaDegrees)
         {
+            double concE = input.Ec;
+            double fcPrime = input.FcPrime;
+            double ft = input.Ft;
+            double fyx = input.Fyx;
+            double fyy = input.Fyy;
+            double rhoX = input.RhoX;
+            double rhoY = input.RhoY;
+            double aggregateSize = input.AggregateSize;
+            double crackSpacingX = input.CrackSpacingX;
+            double crackSpacingY = input.CrackSpacingY;
+            double epsilonCr = input.EpsilonCr;
+            double epsilonNought = input.EpsilonNought;
+
             double epsilon1 = concPrincipalStrainVector[0];
             double epsilon2 = concPrincipalStrainVector[1];
             double fsx = steelPrincipalStressVector[0];
             double fsy = steelPrincipalStressVector[1];
 
-            double thetaRadians = thetaDegrees * (Math.PI / 180.0);
+            double thetaRadians = Math.Abs(thetaDegrees) * (Math.PI / 180.0); //kept postive to avoid sin and tan flipping signs for crack width and vci calcs 
             double cosTheta = Math.Cos(thetaRadians);
             double sinTheta = Math.Sin(thetaRadians);
             double tanTheta = Math.Tan(thetaRadians);
@@ -41,12 +49,12 @@ namespace MCFT.Core.Calculators
             double crackWidth = crackSpacing * epsilon1;
             double f1cx = rhoX * (fyx - fsx);
             double f1cy = rhoY * (fyy - fsy);
-            double vciMaxA = (0.18 * Math.Sqrt(fcPrime)) / (0.3 + (24 * crackWidth) / (aggregateSize + 16));
+            double vciMaxA = (0.18 * Math.Sqrt(fcPrime)) / (0.31 + (24 * crackWidth) / (aggregateSize + 16));
             double vciMaxB = Math.Abs(f1cx - f1cy) * cosTheta * sinTheta;
             double vci = Math.Min(vciMaxA, vciMaxB);
 
             double f1_a;
-            if (epsilon1 >= epsilonCr) { f1_a = fcr / (1 + Math.Sqrt(500 * epsilon1)); }
+            if (epsilon1 >= epsilonCr) { f1_a = ft / (1 + Math.Sqrt(500 * epsilon1)); }
             else { f1_a = epsilon1 * concE; }
 
             double f1_b = f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta;
@@ -54,8 +62,8 @@ namespace MCFT.Core.Calculators
             double f1_d = f1cy + vci * tanTheta;
             double fc1 = Math.Min(Math.Min(f1_a, f1_b), Math.Min(f1_c, f1_d));
 
-            double fc2Max = -fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / epsilonNought), 1);
-            double fc2 = fc2Max * (2 * (-epsilon2 / epsilonNought) - Math.Pow((-epsilon2 / epsilonNought), 2));
+            double fc2Max = -fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1);
+            double fc2 = fc2Max * (2 * (epsilon2 / (-epsilonNought)) - Math.Pow((epsilon2 / (-epsilonNought)), 2));
             return Vector<double>.Build.DenseOfArray(new double[] { fc1, fc2, 0.0 });
         }
 

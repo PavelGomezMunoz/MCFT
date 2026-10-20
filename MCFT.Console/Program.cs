@@ -4,7 +4,7 @@ using MCFT.Core.Solvers;
 var input = new MCFTInput
 {
     FcPrime = 21.8,
-    Fcr = 1.541,
+    Ft = 1.541,
     EpsilonNought = 0.002,
     EpsilonCr = 0.000071,
     Ec = 21800,
@@ -32,6 +32,6 @@ var result = solver.Solve(input);
 
 Console.WriteLine($"Converged: {result.Converged}"); 
 Console.WriteLine($"Iterations: {result.Iterations}");
-Console.WriteLine($"EpsilonX: {result.EpsilonX*1000} mm/m");
-Console.WriteLine($"EpsilonY: {result.EpsilonY*1000} mm/m");
-Console.WriteLine($"GammaXY: {result.GammaXY*1000} mm/m");
+Console.WriteLine($"EpsilonX: {Math.Round(result.EpsilonX*1000,3)} mm/m");
+Console.WriteLine($"EpsilonY: {Math.Round(result.EpsilonY*1000,3)} mm/m");
+Console.WriteLine($"GammaXY: {Math.Round(result.GammaXY*1000,3)} mm/m");

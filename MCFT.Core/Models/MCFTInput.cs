@@ -5,7 +5,7 @@ namespace MCFT.Core.Models
     {
         //Concrete, units MPa
         public double FcPrime { get; set; }
-        public double Fcr { get; set; }
+        public double Ft { get; set; }
         public double EpsilonNought { get; set; }
         public double EpsilonCr { get; set; }
         public double Ec {  get; set; }

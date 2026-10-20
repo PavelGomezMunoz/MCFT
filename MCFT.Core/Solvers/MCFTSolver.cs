@@ -1,12 +1,9 @@
-﻿
-using MCFT.Core.Calculators;
+﻿using MCFT.Core.Calculators;
 using MCFT.Core.Models;
 using MCFT.Core.Utilities;
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace MCFT.Core.Solvers
-
 {
     public class MCFTSolver
     {
@@ -48,7 +45,7 @@ namespace MCFT.Core.Solvers
                 thetaDegrees = StrainCalculator.PrincipalStrainAngleDegrees(strainVectorGlobal);
 
                 steelPrincipalStressVector = StressCalculator.PrincipalSteelStressVector(strainVectorGlobal, input.Es, input.Fyx, input.Fyy);
-                concPrincipalStressVector = StressCalculator.PrincipalConcStressVector(input.Ec, input.FcPrime, input.Fcr, input.Fyx, input.Fyy, input.RhoX, input.RhoY, input.AggregateSize, input.CrackSpacingX, input.CrackSpacingY, input.EpsilonCr, input.EpsilonNought, concPrincipalStrainVector, steelPrincipalStressVector, thetaDegrees);
+                concPrincipalStressVector = StressCalculator.PrincipalConcStressVector(input, concPrincipalStrainVector, steelPrincipalStressVector, thetaDegrees);
                 newStressVectorGlobal = StressCalculator.StressStateGlobal(concPrincipalStressVector, steelPrincipalStressVector, thetaDegrees, input.RhoX, input.RhoY);
 
                 error = (newStressVectorGlobal - stressVectorGlobal).AbsoluteMaximum();

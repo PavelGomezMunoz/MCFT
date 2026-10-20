@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
+﻿using MathNet.Numerics.LinearAlgebra;
 
 namespace MCFT.Core.Calculators
 {
-    public class StiffnessCalculator
+    public static class StiffnessCalculator
     {
         public static Matrix<double> ConcreteStiffnessMatrixLocal(double fc1, double fc2, double epsilon1, double epsilon2, double Ec)
         {
@@ -22,7 +18,7 @@ namespace MCFT.Core.Calculators
 
             Gc = (Ec1 * Ec2) / (Ec1 + Ec2);
 
-            return DenseMatrix.OfArray(new double[,]
+            return Matrix<double>.Build.DenseOfArray(new double[,]
             {
                 { Ec2, 0, 0 },
                 { 0, Ec1, 0 },
@@ -41,7 +37,7 @@ namespace MCFT.Core.Calculators
             if (epsilonY == 0) { EsY = Es; }
             else { EsY = Math.Min(Es, fyY / Math.Abs(epsilonY)); }
 
-            return DenseMatrix.OfArray(new double[,]
+            return Matrix<double>.Build.DenseOfArray(new double[,]
             {
                 { EsX*rhoX, 0, 0 },
                 { 0, EsY*rhoY, 0 },
