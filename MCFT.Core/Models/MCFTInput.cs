@@ -27,8 +27,17 @@ namespace MCFT.Core.Models
         public double CrackSpacingX { get; set; }
         public double CrackSpacingY { get; set; }
 
-        //Solver Properties
+        //Stress State Secant Solver Properties
         public double Tolerance { get; set; } = 0.001;
         public int MaxIterations { get; set; } = 1000;
+
+        //Stress-Strain Curve Solver Properties
+        public double LoadFactorIncrement { get; set; } = 0.05;
+        public double MaxLoadFactor { get; set; } = 10.0;
+        public int Refinements { get; set; } = 8;
+
+        //Biaxial Failure Envelope Solver Properties
+
+
     }
 }

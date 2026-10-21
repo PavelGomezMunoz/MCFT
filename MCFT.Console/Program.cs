@@ -23,14 +23,27 @@ var input = new MCFTInput
     CrackSpacingY = 115,
 
     Tolerance = 0.001,
-    MaxIterations = 1000
+    MaxIterations = 1000,
+
+    LoadFactorIncrement = 0.05,
+    MaxLoadFactor = 10.0,
+    Refinements = 8
 };
 
-var solver = new MCFTStressStateSolver();
+var stressStateSolver = new MCFTStressStateSolver();
+var stressStateResult = stressStateSolver.Solve(input);
+Console.WriteLine($"Iterations: {stressStateResult.Iterations}");
+Console.WriteLine($"EpsilonX: {Math.Round(stressStateResult.EpsilonX*1000,3)} mm/m");
+Console.WriteLine($"EpsilonY: {Math.Round(stressStateResult.EpsilonY*1000,3)} mm/m");
+Console.WriteLine($"GammaXY: {Math.Round(stressStateResult.GammaXY*1000,3)} mm/m");
 
-var result = solver.Solve(input);
+var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
+var stressStrainCurveResult = stressStrainCurveSolver.Solve(input);
 
-Console.WriteLine($"Iterations: {result.Iterations}");
-Console.WriteLine($"EpsilonX: {Math.Round(result.EpsilonX*1000,3)} mm/m");
-Console.WriteLine($"EpsilonY: {Math.Round(result.EpsilonY*1000,3)} mm/m");
-Console.WriteLine($"GammaXY: {Math.Round(result.GammaXY*1000,3)} mm/m");
+Console.WriteLine("Step  Lambda   SigmaX (MPa)   SigmaY (MPa) Tau (MPa)   EpsX (mm/m)  EpsY (mm/m)  Gamma (mm/m)  Iter");
+for (int i = 0; i < stressStrainCurveResult.CurveResultData.Count; i++)
+{
+    var p = stressStrainCurveResult.CurveResultData[i];
+    Console.WriteLine($"{i + 1,4}  {p.LoadFactor,6:F3}  {p.SigmaX,6:F2}  {p.SigmaY,6:F2}  {p.TauXY,6:F2}  {p.EpsilonX * 1000,10:F3}  {p.EpsilonY * 1000,10:F3}  {p.GammaXY * 1000,11:F3}  {p.Iterations,5}");
+}
+Console.WriteLine($"Capacity load factor: {stressStrainCurveResult.CapacityLoadFactor:F3} (capacity reached: {stressStrainCurveResult.CapacityReached})");
