@@ -34,7 +34,7 @@ namespace MCFT.Core.Calculators
             double crackSpacingX = input.CrackSpacingX;
             double crackSpacingY = input.CrackSpacingY;
             double epsilonCr = input.EpsilonCr;
-            double epsilonNought = input.EpsilonNought;
+            double epsilonNought = Math.Abs(input.EpsilonNought);
 
             double epsilon1 = concPrincipalStrainVector[0];
             double epsilon2 = concPrincipalStrainVector[1];
@@ -56,35 +56,54 @@ namespace MCFT.Core.Calculators
             double vciMaxA = (0.18 * Math.Sqrt(fcPrime)) / (0.31 + (24 * crackWidth) / (aggregateSize + 16));
             double vciMaxB = Math.Abs(f1cx - f1cy) * cosTheta * sinAbsTheta;
             double vci = Math.Min(vciMaxA, vciMaxB);
+            double fc1;
+            double fc2;
 
-            double f1_a; // tensile capacity of concrete
-            if (epsilon1 >= epsilonCr) { f1_a = ft / (1 + Math.Sqrt(500 * epsilon1)); }
-            else { f1_a = epsilon1 * concE; }
-
-            double f1_b = f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta; // reserve capacity to biaxial yield of reinforcement that crosses a crack
-
-            double f1_c; // limit due to yield of the x-dir reinf in conjuction with vci at maximum
-            double f1_d; // limit due to yield of the y-dir reinf in conjuction with vci at maximum
-            if (tanAbsTheta < tanAbsThetaLimitMin)
+            if (epsilon1 >= 0 && epsilon2 >= 0)
             {
-                f1_c = f1cx + vci / tanAbsThetaLimitMin;
-                f1_d = f1cy;
+                if (epsilon1 >= epsilonCr) { fc1 = ft / (1 + Math.Sqrt(500 * epsilon1)); }
+                else { fc1 = epsilon1 * concE; }
+
+                if (epsilon2 >= epsilonCr) { fc2 = ft / (1 + Math.Sqrt(500 * epsilon2)); }
+                else { fc2 = epsilon2 * concE; }
             }
-            else if (tanAbsTheta > tanAbsThetaLimitMax)
+
+            else if (epsilon1 >= 0 && epsilon2 < 0)
             {
-                f1_c = f1cx;
-                f1_d = f1cy + vci * tanAbsThetaLimitMax;
+                double f1_a; // tensile capacity of concrete
+                if (epsilon1 >= epsilonCr) { f1_a = ft / (1 + Math.Sqrt(500 * epsilon1)); }
+                else { f1_a = epsilon1 * concE; }
+
+                double f1_b = f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta; // reserve capacity to biaxial yield of reinforcement that crosses a crack
+
+                double f1_c; // limit due to yield of the x-dir reinf in conjuction with vci at maximum
+                double f1_d; // limit due to yield of the y-dir reinf in conjuction with vci at maximum
+                if (tanAbsTheta < tanAbsThetaLimitMin)
+                {
+                    f1_c = f1cx + vci / tanAbsThetaLimitMin;
+                    f1_d = f1cy;
+                }
+                else if (tanAbsTheta > tanAbsThetaLimitMax)
+                {
+                    f1_c = f1cx;
+                    f1_d = f1cy + vci * tanAbsThetaLimitMax;
+                }
+                else
+                {
+                    f1_c = f1cx + vci / tanAbsTheta;
+                    f1_d = f1cy + vci * tanAbsTheta;
+                }
+
+                fc1 = Math.Min(Math.Min(f1_a, f1_b), Math.Min(f1_c, f1_d));
+                fc2 = (-fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1)) * (2 * (epsilon2 / (-epsilonNought)) - Math.Pow((epsilon2 / (-epsilonNought)), 2));
             }
+
             else
             {
-                f1_c = f1cx + vci / tanAbsTheta;
-                f1_d = f1cy + vci * tanAbsTheta;
+                fc1 = (-fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon2 / (-epsilonNought)), 1)) * (2 * (epsilon1 / (-epsilonNought)) - Math.Pow((epsilon1 / (-epsilonNought)), 2));
+                fc2 = (-fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1)) * (2 * (epsilon2 / (-epsilonNought)) - Math.Pow((epsilon2 / (-epsilonNought)), 2));
             }
 
-            double fc1 = Math.Min(Math.Min(f1_a, f1_b), Math.Min(f1_c, f1_d));
-
-            double fc2Max = -fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1);
-            double fc2 = fc2Max * (2 * (epsilon2 / (-epsilonNought)) - Math.Pow((epsilon2 / (-epsilonNought)), 2));
             return Vector<double>.Build.DenseOfArray(new double[] { fc1, fc2, 0.0 });
         }
 
