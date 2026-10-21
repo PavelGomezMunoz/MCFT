@@ -26,11 +26,10 @@ var input = new MCFTInput
     MaxIterations = 1000
 };
 
-var solver = new MCFTSolver();
+var solver = new MCFTStressStateSolver();
 
 var result = solver.Solve(input);
 
-Console.WriteLine($"Converged: {result.Converged}"); 
 Console.WriteLine($"Iterations: {result.Iterations}");
 Console.WriteLine($"EpsilonX: {Math.Round(result.EpsilonX*1000,3)} mm/m");
 Console.WriteLine($"EpsilonY: {Math.Round(result.EpsilonY*1000,3)} mm/m");

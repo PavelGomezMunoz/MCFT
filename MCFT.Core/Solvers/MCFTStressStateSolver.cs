@@ -5,11 +5,11 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace MCFT.Core.Solvers
 {
-    public class MCFTSolver
+    public class MCFTStressStateSolver
     {
-        public MCFTResult Solve(MCFTInput input)
+        public MCFTStressStateResult Solve(MCFTInput input)
         {
-            var result = new MCFTResult();
+            var result = new MCFTStressStateResult();
             double error = double.MaxValue;
             int iteration = 0;
             Vector<double> stressVectorGlobal = Vector<double>.Build.DenseOfArray(new double[] { input.Fx, input.Fy, input.Vxy });
