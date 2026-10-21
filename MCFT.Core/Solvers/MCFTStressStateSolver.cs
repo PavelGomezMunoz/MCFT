@@ -9,6 +9,7 @@ namespace MCFT.Core.Solvers
     {
         public MCFTStressStateResult Solve(MCFTInput input)
         {
+            // Solves stress state using itirative secant stiffness method to solve nonlinear system
             var result = new MCFTStressStateResult();
             double error = double.MaxValue;
             int iteration = 0;
@@ -40,7 +41,6 @@ namespace MCFT.Core.Solvers
                 if (iteration == input.MaxIterations) {break;}
             }
             //Write final result
-            result.Converged = error <= input.Tolerance;
             result.Iterations = iteration;
             result.EpsilonX = strainVectorGlobal[0];
             result.EpsilonY = strainVectorGlobal[1];
