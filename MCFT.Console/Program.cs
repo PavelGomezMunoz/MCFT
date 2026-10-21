@@ -40,10 +40,10 @@ Console.WriteLine($"GammaXY: {Math.Round(stressStateResult.GammaXY*1000,3)} mm/m
 var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
 var stressStrainCurveResult = stressStrainCurveSolver.Solve(input);
 
-Console.WriteLine("Step  Lambda   SigmaX (MPa)   SigmaY (MPa) Tau (MPa)   EpsX (mm/m)  EpsY (mm/m)  Gamma (mm/m)  Iter");
+Console.WriteLine("Step  Lambda   SigmaX (MPa)   SigmaY (MPa)   Tau (MPa)   EpsX (mm/m)  EpsY (mm/m)  Gamma (mm/m)  Iter");
 for (int i = 0; i < stressStrainCurveResult.CurveResultData.Count; i++)
 {
     var p = stressStrainCurveResult.CurveResultData[i];
-    Console.WriteLine($"{i + 1,4}  {p.LoadFactor,6:F3}  {p.SigmaX,6:F2}  {p.SigmaY,6:F2}  {p.TauXY,6:F2}  {p.EpsilonX * 1000,10:F3}  {p.EpsilonY * 1000,10:F3}  {p.GammaXY * 1000,11:F3}  {p.Iterations,5}");
+    Console.WriteLine($"{i + 1,4}  {p.LoadFactor,4:F3}  {p.SigmaX,11:F2}  {p.SigmaY,11:F2}  {p.TauXY,11:F2}  {p.EpsilonX * 1000,14:F3}  {p.EpsilonY * 1000,10:F3}  {p.GammaXY * 1000,10:F3}  {p.Iterations,10}");
 }
 Console.WriteLine($"Capacity load factor: {stressStrainCurveResult.CapacityLoadFactor:F3} (capacity reached: {stressStrainCurveResult.CapacityReached})");
