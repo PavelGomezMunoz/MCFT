@@ -3,43 +3,468 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MCFT.WPF"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin= "20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="MCFT Biaxial Failure Analysis" Height="900" Width="1600" WindowState="Maximized">
 
-        <StackPanel Grid.Row="0">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.14*" MinWidth="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.14*" MinWidth="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.72*" MinWidth="900"/>
+        </Grid.ColumnDefinitions>
 
-            <TextBlock Text="f'c"/>
+        <!-- ============== LEFT PANEL: INPUT PARAMETERS (10%) ============== -->
+        <ScrollViewer Grid.Column="0" Background="#F5F5F5">
+            <StackPanel Margin="10">
+                <TextBlock Text="INPUT" FontSize="12" FontWeight="Bold" Margin="0,0,0,12" Foreground="#333"/>
 
-            <TextBox Text="{Binding FcPrime}" />
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="CONCRETE" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
 
-        </StackPanel>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="f'c" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
-        <StackPanel Grid.Row="1">
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="ft" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
-            <TextBlock Text="ρx"/>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Ec" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
-            <TextBox Text="{Binding RhoX}" />
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="ε₀" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
-        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="εcr" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
 
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="STEEL" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
 
-        <Button Grid.Row="2"
-            Content="Run Analysis"
-            Command="{Binding }" />
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="ρx" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="ρy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
-        <StackPanel Grid.Row="3">
-            <TextBlock Text="{Binding EpsilonX}"/>
-        </StackPanel>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="fyx" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="fyy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
 
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Es" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="LOAD" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Fx" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Fy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Vxy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="MESH" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Agg Size" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Sp. X" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Sp. Y" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="SOLVER" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tolerance" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Max LF" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Refine" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Margin="0,15,0,0">
+                    <Button Content="Load Defaults" Padding="8,8" FontSize="10" 
+                            Background="#2196F3" Foreground="White" Margin="0,0,0,6" Cursor="Hand"/>
+                    <Button Content="Save" Padding="8,8" FontSize="10" 
+                            Background="#FF9800" Foreground="White" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Vertical Separator 1 -->
+        <Separator Grid.Column="1" Width="2" Background="#DADADA" Margin="0,10"/>
+
+        <!-- ============== MIDDLE PANEL: STRESS STATE RESULTS (10%) ============== -->
+        <ScrollViewer Grid.Column="2" Background="#FAFAFA">
+            <StackPanel Margin="10">
+                <TextBlock Text="RESULTS" FontSize="12" FontWeight="Bold" Margin="0,0,0,12" Foreground="#333"/>
+
+                <Border BorderBrush="#4CAF50" BorderThickness="2" Padding="10" Margin="0,0,0,10" Background="#E8F5E9" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="STATUS" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#333"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="Conv:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold" Foreground="#4CAF50"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="LF:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Iter:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="STRESSES" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="σX:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="σY:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="τXY:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="STRAINS" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="εX:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="εY:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="γXY:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="PRINCIPAL" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="ε₁:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="ε₂:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="θ°:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="fc₁:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="fc₂:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="STEEL &amp; SHEAR" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="fsx:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="fsy:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="vci:" Width="50" FontSize="10"/>
+                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Button Content="RUN ANALYSIS" Padding="10,12" FontSize="11" FontWeight="Bold" 
+                        Background="#4CAF50" Foreground="White" Margin="0,20,0,0" Cursor="Hand"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Vertical Separator 2 -->
+        <Separator Grid.Column="3" Width="2" Background="#DADADA" Margin="0,10"/>
+
+        <!-- ============== RIGHT PANEL: CHARTS (80%) ============== -->
+        <Grid Grid.Column="4" Background="#F5F5F5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.50*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="0.50*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT SIDE: Stress-Strain Curves 4×2 Plot Grid -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <TextBlock Grid.Row="0" Text="STRESS-STRAIN CURVES" FontSize="12" FontWeight="Bold" Margin="10,10,0,8" Foreground="#333"/>
+
+                <!-- Chart Grid -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Column 1 -->
+                    <!-- Row 0 -->
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="σX vs εX" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 1 -->
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="σY vs εY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 2 -->
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="τXY vs γXY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 3 -->
+                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="fsx vs εX" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Column 2 -->
+                    <!-- Row 0 -->
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="fc₁ vs ε₁" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 1 -->
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="fc₂ vs ε₂" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 2 -->
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Vci vs ε₁" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Row 3 -->
+                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="fsy vs εY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
+                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <!-- Vertical Separator 3 -->
+            <Separator Grid.Column="1" Width="2" Background="#DADADA" Margin="0,10"/>
+
+            <!-- RIGHT SIDE: Biaxial Envelope Plot (Full Height) -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <TextBlock Grid.Row="0" Text="BIAXIAL FAILURE ENVELOPE DIAGRAM" FontSize="12" FontWeight="Bold" Margin="10,10,0,8" Foreground="#333"/>
+
+                <!-- Plot Container -->
+                <Border Grid.Row="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Biaxial Envelope Plot" FontSize="11" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,5"/>
+                        <TextBlock Text="[OxyPlot placeholder]" FontSize="10" Foreground="#999" TextAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
