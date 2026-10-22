@@ -9,11 +9,11 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.14*" MinWidth="200"/>
+            <ColumnDefinition Width="0.10*" MinWidth="200"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="0.14*" MinWidth="200"/>
+            <ColumnDefinition Width="0.10*" MinWidth="250"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="0.72*" MinWidth="900"/>
+            <ColumnDefinition Width="0.80*" MinWidth="900"/>
         </Grid.ColumnDefinitions>
 
         <!-- ============== LEFT PANEL: INPUT PARAMETERS (10%) ============== -->
@@ -31,7 +31,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="f'c" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.FcPrime, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -40,7 +40,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="ft" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Ft, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -49,7 +49,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Ec" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Ec, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -58,7 +58,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="ε₀" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.EpsilonNought, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid>
@@ -67,7 +67,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="εcr" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.EpsilonCr, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -82,7 +82,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="ρx" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.RhoX, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -91,7 +91,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="ρy" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.RhoY, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -100,7 +100,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="fyx" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Fyx, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -109,7 +109,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="fyy" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Fyy, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid>
@@ -118,7 +118,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Es" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Es, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -133,7 +133,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Fx" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Fx, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -142,7 +142,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Fy" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Fy, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid>
@@ -151,7 +151,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Vxy" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Vxy, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -166,7 +166,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Agg Size" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.AggregateSize, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -175,7 +175,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Sp. X" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.CrackSpacingX, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid>
@@ -184,7 +184,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Sp. Y" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.CrackSpacingY, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -199,7 +199,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Tolerance" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Tolerance, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="0,0,0,6">
@@ -208,7 +208,7 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Max LF" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.MaxLoadFactor, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
                         <Grid>
@@ -217,16 +217,18 @@
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Refine" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.Refinements, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
 
                 <StackPanel Margin="0,15,0,0">
                     <Button Content="Load Defaults" Padding="8,8" FontSize="10" 
-                            Background="#2196F3" Foreground="White" Margin="0,0,0,6" Cursor="Hand"/>
+                            Background="#2196F3" Foreground="White" Margin="0,0,0,6" Cursor="Hand"
+                            Command="{Binding LoadDefaultsCommand}"/>
                     <Button Content="Save" Padding="8,8" FontSize="10" 
-                            Background="#FF9800" Foreground="White" Cursor="Hand"/>
+                            Background="#FF9800" Foreground="White" Cursor="Hand"
+                            Command="{Binding SaveCommand}"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
@@ -244,15 +246,15 @@
                         <TextBlock Text="STATUS" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#333"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="Conv:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold" Foreground="#4CAF50"/>
+                            <TextBlock Text="{Binding CurrentResult.Converged}" FontSize="10" FontWeight="Bold" Foreground="#4CAF50"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="LF:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.LoadFactor}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Iter:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10"/>
+                            <TextBlock Text="{Binding CurrentResult.Iterations}" FontSize="10"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -262,15 +264,15 @@
                         <TextBlock Text="STRESSES" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="σX:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.SigmaX}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="σY:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.SigmaY}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="τXY:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.TauXY}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -280,15 +282,15 @@
                         <TextBlock Text="STRAINS" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="εX:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.EpsilonX}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="εY:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.EpsilonY}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="γXY:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.GammaXY}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -298,23 +300,23 @@
                         <TextBlock Text="PRINCIPAL" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="ε₁:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Epsilon1}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="ε₂:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Epsilon2}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="θ°:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.ThetaDegrees}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="fc₁:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Fc1}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="fc₂:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Fc2}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -324,21 +326,22 @@
                         <TextBlock Text="STEEL &amp; SHEAR" FontSize="11" FontWeight="Bold" Margin="0,0,0,6" Foreground="#444"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="fsx:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Fsx}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="fsy:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Fsy}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="vci:" Width="50" FontSize="10"/>
-                            <TextBlock Text="—" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CurrentResult.Vci}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
                 <Button Content="RUN ANALYSIS" Padding="10,12" FontSize="11" FontWeight="Bold" 
-                        Background="#4CAF50" Foreground="White" Margin="0,20,0,0" Cursor="Hand"/>
+                        Background="#4CAF50" Foreground="White" Margin="0,20,0,0" Cursor="Hand"
+                        Command="{Binding RunAnalysisCommand}"/>
             </StackPanel>
         </ScrollViewer>
 
@@ -377,70 +380,30 @@
                     </Grid.RowDefinitions>
 
                     <!-- Column 1 -->
-                    <!-- Row 0 -->
-                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="σX vs εX" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 0: σX vs εX -->
+                    <oxy:PlotView Grid.Row="0" Grid.Column="0" Model="{Binding PlotModel_SigmaXvsEpsilonX}" Margin="8" Background="White"/>
 
-                    <!-- Row 1 -->
-                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="σY vs εY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 1: σY vs εY -->
+                    <oxy:PlotView Grid.Row="1" Grid.Column="0" Model="{Binding PlotModel_SigmaYvsEpsilonY}" Margin="8" Background="White"/>
 
-                    <!-- Row 2 -->
-                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="τXY vs γXY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 2: τXY vs γXY -->
+                    <oxy:PlotView Grid.Row="2" Grid.Column="0" Model="{Binding PlotModel_TauXYvsGammaXY}" Margin="8" Background="White"/>
 
-                    <!-- Row 3 -->
-                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="fsx vs εX" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 3: fsx vs εX -->
+                    <oxy:PlotView Grid.Row="3" Grid.Column="0" Model="{Binding PlotModel_FsxvsEpsilonX}" Margin="8" Background="White"/>
 
                     <!-- Column 2 -->
-                    <!-- Row 0 -->
-                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="fc₁ vs ε₁" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 0: fc₁ vs ε₁ -->
+                    <oxy:PlotView Grid.Row="0" Grid.Column="1" Model="{Binding PlotModel_Fc1vsEpsilon1}" Margin="8" Background="White"/>
 
-                    <!-- Row 1 -->
-                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="fc₂ vs ε₂" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 1: fc₂ vs ε₂ -->
+                    <oxy:PlotView Grid.Row="1" Grid.Column="1" Model="{Binding PlotModel_Fc2vsEpsilon2}" Margin="8" Background="White"/>
 
-                    <!-- Row 2 -->
-                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Vci vs ε₁" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 2: Vci vs ε₁ -->
+                    <oxy:PlotView Grid.Row="2" Grid.Column="1" Model="{Binding PlotModel_VcivsEpsilon1}" Margin="8" Background="White"/>
 
-                    <!-- Row 3 -->
-                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="fsy vs εY" FontSize="10" FontWeight="Bold" TextAlignment="Center"/>
-                            <TextBlock Text="[placeholder]" FontSize="9" Foreground="#999" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Row 3: fsy vs εY -->
+                    <oxy:PlotView Grid.Row="3" Grid.Column="1" Model="{Binding PlotModel_FsyvsEpsilonY}" Margin="8" Background="White"/>
                 </Grid>
             </Grid>
 
@@ -458,12 +421,7 @@
                 <TextBlock Grid.Row="0" Text="BIAXIAL FAILURE ENVELOPE DIAGRAM" FontSize="12" FontWeight="Bold" Margin="10,10,0,8" Foreground="#333"/>
 
                 <!-- Plot Container -->
-                <Border Grid.Row="1" BorderBrush="#DADADA" BorderThickness="1" Margin="8" Background="White">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Biaxial Envelope Plot" FontSize="11" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,5"/>
-                        <TextBlock Text="[OxyPlot placeholder]" FontSize="10" Foreground="#999" TextAlignment="Center"/>
-                    </StackPanel>
-                </Border>
+                <oxy:PlotView Grid.Row="1" Model="{Binding PlotModel_BiaxialEnvelope}" Margin="8" Background="White"/>
             </Grid>
         </Grid>
     </Grid>
