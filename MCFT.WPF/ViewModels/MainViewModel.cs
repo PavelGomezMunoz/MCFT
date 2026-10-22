@@ -41,11 +41,11 @@ namespace MCFT.WPF.ViewModels
             Refinements = 10
         };
 
-        // 
+        // Result Data Binded to the UI
         [ObservableProperty]
         private MCFTStressStateResult currentResult = new MCFTStressStateResult();
 
-        // Curve Result Data
+        // Plots Binded to the UI
         [ObservableProperty]
         private PlotModel plotModel_SigmaXvsEpsilonX = new PlotModel { Title = "σX vs εX" };
 
@@ -147,6 +147,7 @@ namespace MCFT.WPF.ViewModels
             PlotModel_FsyvsEpsilonY = CreatePlotModel("fsy vs εY", "εY (mm/mm)", "fsy (MPa)",
                 data.Select(d => new DataPoint(d.EpsilonY, d.Fsy)).ToList());
         }
+
 
         private void UpdateBiaxialEnvelopeChart(MCFTStressStrainCurveResult curveResult)
         {
