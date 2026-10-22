@@ -39,5 +39,8 @@ namespace MCFT.Core.Models
         //Biaxial Failure Envelope Solver Properties
 
 
+
+
+        public MCFTInput Clone() => (MCFTInput)MemberwiseClone();
     }
 }

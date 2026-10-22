@@ -28,7 +28,9 @@ namespace MCFT.Core.Models
             {
                 StrainVectorGlobal = StrainVectorGlobal.Clone(),
                 ConcPrincipalStrainVector = ConcPrincipalStrainVector.Clone(),
-                ConcPrincipalStressVector = ConcPrincipalStressVector.Clone()
+                ThetaDegrees = ThetaDegrees,
+                ConcPrincipalStressVector = ConcPrincipalStressVector.Clone(),
+                SteelPrincipalStressVector = SteelPrincipalStressVector.Clone()
             };
         }
 
