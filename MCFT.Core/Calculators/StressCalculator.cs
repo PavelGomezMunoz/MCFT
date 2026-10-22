@@ -52,24 +52,24 @@ namespace MCFT.Core.Calculators
             double fc1;
             double fc2;
             double vci = 0.0; // shear stress on the crack surface, stays 0 unless the concrete is cracked in tension-compression
+            double f1cx = rhoX * (fyx - fsx); // residual capacity of the x-dir reinf that crosses a crack
+            double f1cy = rhoY * (fyy - fsy); // residual capacity of the y-dir reinf that crosses a crack
 
             if (epsilon1 >= 0 && epsilon2 >= 0)
             {
-                if (epsilon1 >= epsilonCr) { fc1 = ft / (1 + Math.Sqrt(500 * epsilon1)); }
+                if (epsilon1 >= epsilonCr) { fc1 = Math.Min((ft / (1 + Math.Sqrt(500 * epsilon1))), (f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta) ); }
                 else { fc1 = epsilon1 * concE; }
 
-                if (epsilon2 >= epsilonCr) { fc2 = ft / (1 + Math.Sqrt(500 * epsilon2)); }
+                if (epsilon2 >= epsilonCr) { fc2 = Math.Min((ft / (1 + Math.Sqrt(500 * epsilon2))), (f1cy * sinTheta * sinTheta + f1cx * cosTheta * cosTheta)); }
                 else { fc2 = epsilon2 * concE; }
             }
 
             else if (epsilon1 >= 0 && epsilon2 < 0)
             {
-                // Crack geometry and reinforcement capacity at the crack, only needed in this branch
+                // Crack geometry 
                 double crackSpacing = 1 / (sinAbsTheta / crackSpacingX + cosTheta / crackSpacingY);
                 double crackWidth = crackSpacing * epsilon1;
-                double f1cx = rhoX * (fyx - fsx); // residual capacity of the x-dir reinf that crosses a crack
-                double f1cy = rhoY * (fyy - fsy); // residual capacity of the y-dir reinf that crosses a crack
-
+                
                 // Most shear stress the crack surface can carry (aggregate interlock, no compression across the crack)
                 double vciMaxA = (0.18 * Math.Sqrt(fcPrime)) / (0.31 + (24 * crackWidth) / (aggregateSize + 16));
                 double vciMaxB = Math.Abs(f1cx - f1cy) * cosTheta * sinAbsTheta;
