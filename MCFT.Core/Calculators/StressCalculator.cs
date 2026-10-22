@@ -104,7 +104,7 @@ namespace MCFT.Core.Calculators
                 fc2 = (-fcPrime * Math.Min(1 / (0.8 - 0.34 * epsilon1 / (-epsilonNought)), 1)) * (2 * (epsilon2 / (-epsilonNought)) - Math.Pow((epsilon2 / (-epsilonNought)), 2));
             }
 
-            return Vector<double>.Build.DenseOfArray(new double[] { fc1, fc2, 0.0 });
+            return Vector<double>.Build.DenseOfArray(new double[] { fc1, fc2, vci });
         }
 
         public static Vector<double> StressStateGlobal(Vector<double> concretePrincipalStress, Vector<double> steelPrincipalStress, double thetaDegrees, double rhoX, double rhoY)

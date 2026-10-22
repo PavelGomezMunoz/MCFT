@@ -28,6 +28,7 @@ namespace MCFT.Core.Solvers
 
                 // Work on a copy so a failed attempt leaves 'state' untouched
                 MCFTSolverState trialState = state.Clone();
+
                 MCFTStressStateResult stressStrainResultAtPoint = _stressStateSolver.Solve(input, trialLoadFactor, trialState);
 
                 if (stressStrainResultAtPoint.Converged)
