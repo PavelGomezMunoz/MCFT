@@ -10,7 +10,7 @@ namespace MCFT.WPF.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // ============== INPUT PROPERTIES ==============
+        // Input Data Binded to the UI
         [ObservableProperty]
         private MCFTInput input = new MCFTInput
         {
@@ -24,24 +24,28 @@ namespace MCFT.WPF.ViewModels
             Fyx = 402,
             Fyy = 402,
             Es = 200000,
+
             Fx = 3.1,
             Fy = 0,
             Vxy = 1.0,
+
             AggregateSize = 19,
             CrackSpacingX = 115,
             CrackSpacingY = 115,
+
             Tolerance = 0.001,
             MaxIterations = 1000,
-            LoadFactorIncrement = 0.05,
-            MaxLoadFactor = 10.0,
-            Refinements = 8
+
+            NumberOfStepsInUnitStressVector = 5,
+            CurveMaxNumberOfSteps = 1000,
+            Refinements = 10
         };
 
-        // ============== RESULT PROPERTIES ==============
+        // 
         [ObservableProperty]
         private MCFTStressStateResult currentResult = new MCFTStressStateResult();
 
-        // ============== CHART MODELS ==============
+        // Curve Result Data
         [ObservableProperty]
         private PlotModel plotModel_SigmaXvsEpsilonX = new PlotModel { Title = "σX vs εX" };
 
@@ -66,6 +70,7 @@ namespace MCFT.WPF.ViewModels
         [ObservableProperty]
         private PlotModel plotModel_FsyvsEpsilonY = new PlotModel { Title = "fsy vs εY" };
 
+        // Biaxial Envelope Result Data
         [ObservableProperty]
         private PlotModel plotModel_BiaxialEnvelope = new PlotModel { Title = "Biaxial Failure Envelope" };
 
@@ -80,14 +85,12 @@ namespace MCFT.WPF.ViewModels
 
                 // First: Run MCFTStressStateSolver to get current stress state at LF=1.0
                 var stressStateSolver = new MCFTStressStateSolver();
-                var currentStateResult = stressStateSolver.Solve(solverInput);
-                CurrentResult = currentStateResult;
+                var stressStateResult = stressStateSolver.Solve(solverInput);
+                CurrentResult = stressStateResult;
 
                 // Second: Run MCFTStressStrainCurveSolver to generate complete failure path
-                var stressStrainSolver = new MCFTStressStrainCurveSolver();
-                var curveResult = stressStrainSolver.Solve(solverInput);
-
-                // Update all charts from the curve results
+                var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
+                var curveResult = stressStrainCurveSolver.Solve(solverInput);
                 UpdateStressStrainCharts(curveResult);
                 UpdateBiaxialEnvelopeChart(curveResult);
             }
@@ -96,45 +99,15 @@ namespace MCFT.WPF.ViewModels
                 // Clear charts on error
                 ResetAllCharts();
                 CurrentResult = new MCFTStressStateResult();
-                System.Diagnostics.Debug.WriteLine($"Analysis Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Analysis Run Error: {ex.Message}");
             }
         }
 
-        [RelayCommand]
-        private void LoadDefaults()
-        {
-            Input = new MCFTInput
-            {
-                FcPrime = 21.8,
-                Ft = 1.541,
-                EpsilonNought = 0.002,
-                EpsilonCr = 0.000071,
-                Ec = 21800,
-                RhoX = 0.02195,
-                RhoY = 0.0,
-                Fyx = 402,
-                Fyy = 402,
-                Es = 200000,
-                Fx = 3.1,
-                Fy = 0,
-                Vxy = 1.0,
-                AggregateSize = 19,
-                CrackSpacingX = 115,
-                CrackSpacingY = 115,
-                Tolerance = 0.001,
-                MaxIterations = 1000,
-                LoadFactorIncrement = 0.05,
-                MaxLoadFactor = 10.0,
-                Refinements = 8
-            };
-        }
 
-        [RelayCommand]
-        private void Save()
-        {
-            // Placeholder for save functionality
-            System.Diagnostics.Debug.WriteLine("Save functionality not yet implemented");
-        }
+
+
+
+
 
         // ============== PRIVATE METHODS ==============
         private void UpdateStressStrainCharts(MCFTStressStrainCurveResult curveResult)

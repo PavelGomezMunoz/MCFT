@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="MCFT Biaxial Failure Analysis" Height="900" Width="1600" WindowState="Maximized">
+        Title="MCFT Biaxial Failure Analysis" Height="900" Width="1600" WindowState="Normal">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.10*" MinWidth="200"/>
+            <ColumnDefinition Width="0.15*" MinWidth="100"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="0.10*" MinWidth="250"/>
+            <ColumnDefinition Width="0.10*" MinWidth="100"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="0.80*" MinWidth="900"/>
+            <ColumnDefinition Width="0.70*" MinWidth="900"/>
         </Grid.ColumnDefinitions>
 
         <!-- ============== LEFT PANEL: INPUT PARAMETERS (10%) ============== -->
@@ -132,7 +132,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Fx" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Sigma x" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.Fx, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
@@ -141,7 +141,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Fy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Sigma y" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.Fy, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
@@ -150,7 +150,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Vxy" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Tau xy" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.Vxy, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
@@ -158,7 +158,7 @@
 
                 <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
                     <StackPanel>
-                        <TextBlock Text="MESH" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+                        <TextBlock Text="CRACK PROPERTIES" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
 
                         <Grid Margin="0,0,0,6">
                             <Grid.ColumnDefinitions>
@@ -174,7 +174,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Sp. X" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Crck Sp. X" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.CrackSpacingX, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
@@ -183,7 +183,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Sp. Y" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Crck Sp. Y" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.CrackSpacingY, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
@@ -191,14 +191,14 @@
 
                 <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
                     <StackPanel>
-                        <TextBlock Text="SOLVER" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+                        <TextBlock Text="STRESS SOLVER" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
 
                         <Grid Margin="0,0,0,6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tolerance" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Stress Tol" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.Tolerance, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
 
@@ -207,29 +207,43 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Max LF" VerticalAlignment="Center" FontSize="10"/>
-                            <TextBox Grid.Column="1" Text="{Binding Input.MaxLoadFactor, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
+                            <TextBlock Text="Max Iterations" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.MaxIterations, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="#DADADA" BorderThickness="1" Padding="10" Margin="0,0,0,10" Background="White" CornerRadius="3">
+                    <StackPanel>
+                        <TextBlock Text="CURVE SOLVER" FontSize="11" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>                      
 
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Refine" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBlock Text="Steps in Unit Stress Vector" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.NumberOfStepsInUnitStressVector, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Curve Max Steps" VerticalAlignment="Center" FontSize="10"/>
+                            <TextBox Grid.Column="1" Text="{Binding Input.CurveMaxNumberOfSteps, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Refinements" VerticalAlignment="Center" FontSize="10"/>
                             <TextBox Grid.Column="1" Text="{Binding Input.Refinements, UpdateSourceTrigger=PropertyChanged}" Padding="5" FontSize="10" TextAlignment="Right"/>
                         </Grid>
                     </StackPanel>
                 </Border>
 
-                <StackPanel Margin="0,15,0,0">
-                    <Button Content="Load Defaults" Padding="8,8" FontSize="10" 
-                            Background="#2196F3" Foreground="White" Margin="0,0,0,6" Cursor="Hand"
-                            Command="{Binding LoadDefaultsCommand}"/>
-                    <Button Content="Save" Padding="8,8" FontSize="10" 
-                            Background="#FF9800" Foreground="White" Cursor="Hand"
-                            Command="{Binding SaveCommand}"/>
-                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
@@ -239,7 +253,7 @@
         <!-- ============== MIDDLE PANEL: STRESS STATE RESULTS (10%) ============== -->
         <ScrollViewer Grid.Column="2" Background="#FAFAFA">
             <StackPanel Margin="10">
-                <TextBlock Text="RESULTS" FontSize="12" FontWeight="Bold" Margin="0,0,0,12" Foreground="#333"/>
+                <TextBlock Text="STRESS RESULTS" FontSize="12" FontWeight="Bold" Margin="0,0,0,12" Foreground="#333"/>
 
                 <Border BorderBrush="#4CAF50" BorderThickness="2" Padding="10" Margin="0,0,0,10" Background="#E8F5E9" CornerRadius="3">
                     <StackPanel>
@@ -247,10 +261,6 @@
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                             <TextBlock Text="Conv:" Width="50" FontSize="10"/>
                             <TextBlock Text="{Binding CurrentResult.Converged}" FontSize="10" FontWeight="Bold" Foreground="#4CAF50"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                            <TextBlock Text="LF:" Width="50" FontSize="10"/>
-                            <TextBlock Text="{Binding CurrentResult.LoadFactor}" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Iter:" Width="50" FontSize="10"/>

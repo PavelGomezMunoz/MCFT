@@ -25,9 +25,9 @@ var input = new MCFTInput
     Tolerance = 0.001,
     MaxIterations = 1000,
 
-    LoadFactorIncrement = 0.05,
-    MaxLoadFactor = 10.0,
-    Refinements = 8
+    NumberOfStepsInUnitStressVector = 5,
+    CurveMaxNumberOfSteps = 1000,
+    Refinements = 10
 };
 
 var stressStateSolver = new MCFTStressStateSolver();
