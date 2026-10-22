@@ -39,7 +39,6 @@ Console.WriteLine($"GammaXY: {Math.Round(stressStateResult.GammaXY*1000,3)} mm/m
 
 var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
 var stressStrainCurveResult = stressStrainCurveSolver.Solve(input);
-
 Console.WriteLine("Step  Lambda   SigmaX (MPa)   SigmaY (MPa)   Tau (MPa)   EpsX (mm/m)  EpsY (mm/m)  Gamma (mm/m)  Iter");
 for (int i = 0; i < stressStrainCurveResult.CurveResultData.Count; i++)
 {
