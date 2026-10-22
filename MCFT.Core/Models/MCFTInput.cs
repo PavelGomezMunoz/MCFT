@@ -37,10 +37,9 @@ namespace MCFT.Core.Models
         public int Refinements { get; set; } = 10;
 
         //Biaxial Failure Envelope Solver Properties
+        public int BiaxialEnvelopeNumAngles { get; set; } = 72;
 
-
-
-
+        //Clone method to create a shallow copy of the MCFTInput object
         public MCFTInput Clone() => (MCFTInput)MemberwiseClone();
     }
 }

@@ -18,10 +18,8 @@ namespace MCFT.Core.Solvers
             {
                 double trialLoadFactor = Math.Min(lastGoodLoadFactor + loadFactorIncrement, maxLoadFactor);
 
-                // Work on a copy so a failed attempt leaves 'state' untouched
                 MCFTSolverState trialState = state.Clone();
                 MCFTStressStateResult stressStrainResultAtPoint = _stressStateSolver.Solve(input, trialLoadFactor, trialState);
-
                 if (stressStrainResultAtPoint.Converged)
                 {
                     state = trialState;      // accept the step
@@ -30,10 +28,9 @@ namespace MCFT.Core.Solvers
                     continue;
                 }
 
-                // Step failed: capacity lies between lastGood and trial. Bisect to narrow it down.
                 double low = lastGoodLoadFactor;
                 double high = trialLoadFactor;
-                for (int i = 0; i < refinements; i++)
+                for (int i = 0; i < refinements; i++) // If did not converge, refine the step by bisection
                 {
                     double mid = 0.5 * (low + high);
                     MCFTSolverState midState = state.Clone();
@@ -50,6 +47,7 @@ namespace MCFT.Core.Solvers
                 stressStrainCurveResult.CapacityReached = true;
                 break;
             }
+
             stressStrainCurveResult.CapacityLoadFactor = lastGoodLoadFactor;
             stressStrainCurveResult.LoadSteps = stressStrainCurveResult.CurveResultData.Count;
             stressStrainCurveResult.Converged = stressStrainCurveResult.CurveResultData.Count > 0;

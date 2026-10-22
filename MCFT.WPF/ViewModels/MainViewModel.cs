@@ -14,31 +14,33 @@ namespace MCFT.WPF.ViewModels
         [ObservableProperty]
         private MCFTInput input = new MCFTInput
         {
-            FcPrime = 21.8,
-            Ft = 1.541,
+            FcPrime = 21.7,
+            Ft = 1.537,
             EpsilonNought = 0.002,
             EpsilonCr = 0.000071,
-            Ec = 21800,
-            RhoX = 0.02195,
-            RhoY = 0.0,
-            Fyx = 402,
-            Fyy = 402,
+            Ec = 21700,
+            RhoX = 0.01785,
+            RhoY = 0.00885,
+            Fyx = 441,
+            Fyy = 324,
             Es = 200000,
 
-            Fx = 3.1,
+            Fx = 0,
             Fy = 0,
-            Vxy = 1.0,
+            Vxy = 1.6,
 
             AggregateSize = 19,
-            CrackSpacingX = 115,
-            CrackSpacingY = 115,
+            CrackSpacingX = 110,
+            CrackSpacingY = 125,
 
             Tolerance = 0.001,
             MaxIterations = 1000,
 
             NumberOfStepsInUnitStressVector = 5,
             CurveMaxNumberOfSteps = 1000,
-            Refinements = 10
+            Refinements = 10,
+
+            BiaxialEnvelopeNumAngles = 72
         };
 
         // Result Data Binded to the UI
@@ -92,7 +94,11 @@ namespace MCFT.WPF.ViewModels
                 var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
                 var curveResult = stressStrainCurveSolver.Solve(solverInput);
                 UpdateStressStrainCharts(curveResult);
-                UpdateBiaxialEnvelopeChart(curveResult);
+
+                // Third: Run MCFTBiaxialFailureEnvelopeSolver to generate biaxial failure envelope
+                var biaxialFailureEnvelopeSolver = new MCFTBiaxialFailureEnvelopeSolver();
+                var biaxialResult = biaxialFailureEnvelopeSolver.Solve(solverInput);
+                UpdateBiaxialEnvelopeChart(biaxialResult);
             }
             catch (Exception ex)
             {
@@ -105,64 +111,54 @@ namespace MCFT.WPF.ViewModels
 
 
 
-
-
-
-
         // ============== PRIVATE METHODS ==============
         private void UpdateStressStrainCharts(MCFTStressStrainCurveResult curveResult)
         {
             var data = curveResult.CurveResultData;
             if (data.Count == 0) return;
 
-            // σX vs εX
             PlotModel_SigmaXvsEpsilonX = CreatePlotModel("σX vs εX", "εX (mm/mm)", "σX (MPa)",
                 data.Select(d => new DataPoint(d.EpsilonX, d.SigmaX)).ToList());
 
-            // σY vs εY
             PlotModel_SigmaYvsEpsilonY = CreatePlotModel("σY vs εY", "εY (mm/mm)", "σY (MPa)",
                 data.Select(d => new DataPoint(d.EpsilonY, d.SigmaY)).ToList());
 
-            // τXY vs γXY
             PlotModel_TauXYvsGammaXY = CreatePlotModel("τXY vs γXY", "γXY (mm/mm)", "τXY (MPa)",
                 data.Select(d => new DataPoint(d.GammaXY, d.TauXY)).ToList());
 
-            // fc₁ vs ε₁
             PlotModel_Fc1vsEpsilon1 = CreatePlotModel("fc₁ vs ε₁", "ε₁ (mm/mm)", "fc₁ (MPa)",
                 data.Select(d => new DataPoint(d.Epsilon1, d.Fc1)).ToList());
 
-            // fc₂ vs ε₂
             PlotModel_Fc2vsEpsilon2 = CreatePlotModel("fc₂ vs ε₂", "ε₂ (mm/mm)", "fc₂ (MPa)",
                 data.Select(d => new DataPoint(d.Epsilon2, d.Fc2)).ToList());
 
-            // Vci vs ε₁
             PlotModel_VcivsEpsilon1 = CreatePlotModel("Vci vs ε₁", "ε₁ (mm/mm)", "Vci (MPa)",
                 data.Select(d => new DataPoint(d.Epsilon1, d.Vci)).ToList());
 
-            // fsx vs εX
             PlotModel_FsxvsEpsilonX = CreatePlotModel("fsx vs εX", "εX (mm/mm)", "fsx (MPa)",
                 data.Select(d => new DataPoint(d.EpsilonX, d.Fsx)).ToList());
 
-            // fsy vs εY
             PlotModel_FsyvsEpsilonY = CreatePlotModel("fsy vs εY", "εY (mm/mm)", "fsy (MPa)",
                 data.Select(d => new DataPoint(d.EpsilonY, d.Fsy)).ToList());
         }
 
-
-        private void UpdateBiaxialEnvelopeChart(MCFTStressStrainCurveResult curveResult)
+        private void UpdateBiaxialEnvelopeChart(MCFTBiaxialFailureEnvelopeResult biaxialResult)
         {
-            var data = curveResult.CurveResultData;
+            var data = biaxialResult.BiaxialResultData;
             if (data.Count == 0) return;
 
-            var plotModel = new PlotModel { Title = "Biaxial Failure Envelope" };
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "σX (MPa)" });
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "σY (MPa)" });
+            var plotModel = new PlotModel { Title = "Biaxial Failure Envelope" , PlotType = PlotType.Cartesian, };
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, PositionAtZeroCrossing = true, Title = "σX (MPa)" });
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, PositionAtZeroCrossing = true, Title = "σY (MPa)" });
 
             var series = new LineSeries
             {
                 Title = "Envelope",
                 Color = OxyColors.Blue,
-                StrokeThickness = 2
+                StrokeThickness = 2,
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 2,
+                MarkerFill = OxyColors.Blue
             };
 
             foreach (var point in data)
@@ -185,7 +181,7 @@ namespace MCFT.WPF.ViewModels
                 Color = OxyColors.Blue,
                 StrokeThickness = 2,
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 3,
+                MarkerSize = 2,
                 MarkerFill = OxyColors.Blue
             };
 
