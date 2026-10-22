@@ -21,7 +21,7 @@ namespace MCFT.Core.Models
             SteelPrincipalStressVector = Vector<double>.Build.Dense(3);
         }
 
-        // Independent copy such that the a failed attempt will not damage the last good state
+        // Independent copy such that a failed attempt will not damage the last good state
         public MCFTSolverState Clone()
         {
             return new MCFTSolverState

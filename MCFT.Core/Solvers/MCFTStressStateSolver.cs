@@ -16,7 +16,7 @@ namespace MCFT.Core.Solvers
         // Entry point for Stress-Strain Curve Solver. solves at (loadFactor x Loads in input) starting from "State"
         public MCFTStressStateResult Solve(MCFTInput input, double loadFactor, MCFTSolverState state)
         {
-            // Solves stress state using itirative secant stiffness method to solve nonlinear system
+            // Solves stress state using iterative secant stiffness method to solve nonlinear system
             var stressStateResult = new MCFTStressStateResult();
             double error = double.MaxValue;
             int iteration = 0;
