@@ -19,6 +19,7 @@ namespace MCFT.WPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModels.MainViewModel();
         }
     }
 }

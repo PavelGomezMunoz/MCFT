@@ -6,7 +6,40 @@
         xmlns:local="clr-namespace:MCFT.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin= "20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+
+            <TextBlock Text="f'c"/>
+
+            <TextBox Text="{Binding FcPrime}" />
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+
+            <TextBlock Text="ρx"/>
+
+            <TextBox Text="{Binding RhoX}" />
+
+        </StackPanel>
+
+
+        <Button Grid.Row="2"
+            Content="Run Analysis"
+            Command="{Binding }" />
+
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="{Binding EpsilonX}"/>
+        </StackPanel>
+
 
     </Grid>
 </Window>
