@@ -57,10 +57,10 @@ namespace MCFT.Core.Calculators
 
             if (epsilon1 >= 0 && epsilon2 >= 0)
             {
-                if (epsilon1 >= epsilonCr) { fc1 = Math.Min((ft / (1 + Math.Sqrt(500 * epsilon1))), (f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta) ); }
+                if (epsilon1 >= epsilonCr) { fc1 = Math.Min( Math.Min((ft / (1 + Math.Sqrt(500 * epsilon1))), (f1cx * sinTheta * sinTheta + f1cy * cosTheta * cosTheta)) , Math.Min(f1cx, f1cy) ); }
                 else { fc1 = epsilon1 * concE; }
 
-                if (epsilon2 >= epsilonCr) { fc2 = Math.Min((ft / (1 + Math.Sqrt(500 * epsilon2))), (f1cy * sinTheta * sinTheta + f1cx * cosTheta * cosTheta)); }
+                if (epsilon2 >= epsilonCr) { fc2 = Math.Min( Math.Min((ft / (1 + Math.Sqrt(500 * epsilon2))), (f1cy * sinTheta * sinTheta + f1cx * cosTheta * cosTheta)) , Math.Min(f1cx, f1cy) ); }
                 else { fc2 = epsilon2 * concE; }
             }
 

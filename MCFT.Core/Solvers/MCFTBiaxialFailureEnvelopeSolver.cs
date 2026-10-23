@@ -21,9 +21,13 @@ namespace MCFT.Core.Solvers
                 currentInput.Fy = unitVectorComponentSigmaY;
                 currentInput.Vxy = 0.0;
 
+                
+
                 MCFTStressStrainCurveResult curveResultAtAngle = _stressStrainCurveSolver.Solve(currentInput);
                 double sigmaXAtCapacity = curveResultAtAngle.CapacityReached ? curveResultAtAngle.CurveResultData.Last().SigmaX : double.NaN;
                 double sigmaYAtCapacity = curveResultAtAngle.CapacityReached ? curveResultAtAngle.CurveResultData.Last().SigmaY : double.NaN;
+
+                Console.WriteLine($"Angle: {angle * 180 / Math.PI,5:F1}° , Unit Forces: ({currentInput.Fx,2:F3}, {currentInput.Fy,2:F3}) , Capacity: ({sigmaXAtCapacity,2:F3}, {sigmaYAtCapacity,2:F3})");
 
                 biaxialFailureEnvelopeResult.BiaxialResultData.Add((sigmaXAtCapacity, sigmaYAtCapacity));
             }

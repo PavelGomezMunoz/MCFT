@@ -17,7 +17,7 @@ namespace MCFT.WPF.ViewModels
             FcPrime = 21.7,
             Ft = 1.537,
             EpsilonNought = 0.002,
-            EpsilonCr = 0.000071,
+            EpsilonCr = 0.0000708,
             Ec = 21700,
             RhoX = 0.01785,
             RhoY = 0.00885,
@@ -25,9 +25,9 @@ namespace MCFT.WPF.ViewModels
             Fyy = 324,
             Es = 200000,
 
-            Fx = 0,
-            Fy = 0,
-            Vxy = 1.6,
+            Fx = 0.0,
+            Fy = 2.867,
+            Vxy = 0,
 
             AggregateSize = 19,
             CrackSpacingX = 110,
@@ -40,7 +40,7 @@ namespace MCFT.WPF.ViewModels
             CurveMaxNumberOfSteps = 1000,
             Refinements = 10,
 
-            BiaxialEnvelopeNumAngles = 72
+            BiaxialEnvelopeNumAngles = 180
         };
 
         // Result Data Binded to the UI
