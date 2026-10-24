@@ -28,16 +28,16 @@ namespace MCFT.Core.Models
         public double CrackSpacingY { get; set; }
 
         //Secant Solver Properties
-        public double Tolerance { get; set; } = 0.001;
-        public int MaxIterations { get; set; } = 1000;
+        public double Tolerance { get; set; }
+        public int MaxIterations { get; set; }
 
         //Stress-Strain Curve Solver Properties
-        public int NumberOfStepsInUnitStressVector { get; set; } = 5;
-        public int CurveMaxNumberOfSteps { get; set; } = 1000;
-        public int Refinements { get; set; } = 10;
+        public int NumberOfStepsInUnitStressVector { get; set; }
+        public int CurveMaxNumberOfSteps { get; set; }
+        public int Refinements { get; set; }
 
         //Biaxial Failure Envelope Solver Properties
-        public int BiaxialEnvelopeNumAngles { get; set; } = 72;
+        public int BiaxialEnvelopeNumAngles { get; set; }
 
         //Clone method to create a shallow copy of the MCFTInput object
         public MCFTInput Clone() => (MCFTInput)MemberwiseClone();

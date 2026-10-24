@@ -20,6 +20,7 @@ namespace MCFT.Core.Solvers
 
                 MCFTSolverState trialState = state.Clone();
                 MCFTStressStateResult stressStrainResultAtPoint = _stressStateSolver.Solve(input, trialLoadFactor, trialState);
+
                 if (stressStrainResultAtPoint.Converged)
                 {
                     state = trialState;      // accept the step
@@ -30,7 +31,7 @@ namespace MCFT.Core.Solvers
 
                 double low = lastGoodLoadFactor;
                 double high = trialLoadFactor;
-                for (int i = 0; i < refinements; i++) // If did not converge, refine the step by bisection
+                for (int i = 0; i < refinements; i++) // If did not converge, refine the steps by bisection
                 {
                     double mid = 0.5 * (low + high);
                     MCFTSolverState midState = state.Clone();
@@ -38,11 +39,12 @@ namespace MCFT.Core.Solvers
                     if (midPoint.Converged)
                     {
                         state = midState;
-                        low = mid;
+                        lastGoodLoadFactor = mid;
                         stressStrainCurveResult.CurveResultData.Add(midPoint);
+                        continue;
                     }
-                    else {high = mid;}
                 }
+
                 lastGoodLoadFactor = low;
                 stressStrainCurveResult.CapacityReached = true;
                 break;
