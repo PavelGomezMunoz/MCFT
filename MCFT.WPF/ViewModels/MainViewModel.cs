@@ -33,14 +33,14 @@ namespace MCFT.WPF.ViewModels
             CrackSpacingX = 110,
             CrackSpacingY = 125,
 
-            Tolerance = 0.001,
+            Tolerance = 0.0001,
             MaxIterations = 1000,
 
-            NumberOfStepsInUnitStressVector = 5,
-            CurveMaxNumberOfSteps = 1000,
+            NumberOfStepsInUnitStressVector = 100,
+            CurveMaxNumberOfSteps = 10000,
             Refinements = 10,
 
-            BiaxialEnvelopeNumAngles = 180
+            BiaxialEnvelopeNumAngles = 360
         };
 
         // Result Data Binded to the UI
