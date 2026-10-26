@@ -14,31 +14,45 @@ var input = new MCFTInput
     Fyy = 324,
     Es = 200000,
 
-    Fx = 1,
-    Fy = 1,
+    Fx = 1.434,
+    Fy = -2.868,
     Vxy = 0,
 
     AggregateSize = 19,
     CrackSpacingX = 110,
     CrackSpacingY = 125,
 
-    Tolerance = 0.01,
+    Tolerance = 0.001,
     MaxIterations = 1000,
 
-    NumberOfStepsInUnitStressVector = 5,
-    CurveMaxNumberOfSteps = 1000,
+    NumberOfStepsInUnitStressVector = 500,
+    CurveMaxNumberOfSteps = 50000,
     Refinements = 10,
 
-    BiaxialEnvelopeNumAngles = 72
+    BiaxialEnvelopeNumAngles = 360
 };
 
 
 var stressStateSolver = new MCFTStressStateSolver();
 var stressStateResult = stressStateSolver.Solve(input);
+Console.WriteLine($"Converged: {stressStateResult.Converged}");
+Console.WriteLine($"LoadFactor: {stressStateResult.LoadFactor}");
 Console.WriteLine($"Iterations: {stressStateResult.Iterations}");
+Console.WriteLine($"SigmaX: {stressStateResult.SigmaX}");
+Console.WriteLine($"SigmaY: {stressStateResult.SigmaY}");
+Console.WriteLine($"TauXY: {stressStateResult.TauXY}");
 Console.WriteLine($"EpsilonX: {Math.Round(stressStateResult.EpsilonX*1000,3)} mm/m");
 Console.WriteLine($"EpsilonY: {Math.Round(stressStateResult.EpsilonY*1000,3)} mm/m");
 Console.WriteLine($"GammaXY: {Math.Round(stressStateResult.GammaXY*1000,3)} mm/m");
+Console.WriteLine($"Epsilon1: {Math.Round(stressStateResult.Epsilon1 * 1000, 3)} mm/m");
+Console.WriteLine($"Epsilon2: {Math.Round(stressStateResult.Epsilon2 * 1000, 3)} mm/m");
+Console.WriteLine($"Theta: {Math.Round(stressStateResult.ThetaDegrees, 3)} deg");
+Console.WriteLine($"Fc1: {Math.Round(stressStateResult.Fc1, 3)} MPa");
+Console.WriteLine($"Fc2: {Math.Round(stressStateResult.Fc2, 3)} MPa");
+Console.WriteLine($"Vci: {Math.Round(stressStateResult.Vci, 3)} MPa");
+Console.WriteLine($"Fsx: {Math.Round(stressStateResult.Fsx, 3)} MPa");
+Console.WriteLine($"Fsy: {Math.Round(stressStateResult.Fsy, 3)} MPa");
+
 
 var stressStrainCurveSolver = new MCFTStressStrainCurveSolver();
 var stressStrainCurveResult = stressStrainCurveSolver.Solve(input);
